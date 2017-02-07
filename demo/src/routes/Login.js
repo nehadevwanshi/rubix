@@ -1,6 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Link, withRouter } from 'react-router';
+import {FacebookLogin} from 'react-facebook-login-component';
+import { browserHistory } from 'react-router'
 
 import {
   Row,
@@ -43,6 +45,13 @@ export default class Login extends React.Component {
     return path;
   }
 
+  responseFacebook(response){
+   console.log(response);
+   console.log(this);
+
+    window.location.href='/ltr/dashboard';
+  }
+  
   render() {
     return (
       <div id='auth-container' className='login'>
@@ -60,10 +69,17 @@ export default class Login extends React.Component {
                         <div className='bg-hoverblue fg-black50 text-center' style={{padding: 12.5}}>
                           <div>You need to sign in for those awesome features</div>
                           <div style={{marginTop: 12.5, marginBottom: 12.5}}>
-                            <Button id='facebook-btn' lg bsStyle='darkblue' type='submit' onClick={::this.back}>
-                              <Icon glyph='icon-fontello-facebook' />
-                              <span>Sign in <span className='hidden-xs'>with facebook</span></span>
-                            </Button>
+
+                          <FacebookLogin socialId="487640164775603"
+                                         language="en_US"
+                                         scope="public_profile,email"
+                                         responseHandler={this.responseFacebook}
+                                         xfbml={true}
+                                         fields="id,email,name"
+                                         version="v2.6"
+                                         class="facebook-login"
+                                         buttonText="Login With Facebook"/>
+
                           </div>
                           <div>
                             <a id='twitter-link' href='#' onClick={::this.back}><Icon glyph='icon-fontello-twitter' /><span> or with twitter</span></a>
@@ -71,7 +87,7 @@ export default class Login extends React.Component {
                         </div>
                         <div>
                           <div className='text-center' style={{padding: 12.5}}>
-                            or use your Rubix account
+                            or use your Rubix account 
                           </div>
                           <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
                             <Form onSubmit={::this.back}>
@@ -118,3 +134,7 @@ export default class Login extends React.Component {
     );
   }
 }
+
+
+
+
